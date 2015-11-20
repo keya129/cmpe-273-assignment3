@@ -42,5 +42,24 @@ var routes = Routes{
 		"/location/{location_id}",
 		LocationRemove,
 	},
-
+	Route{
+		"TripFinder",
+		"POST",
+		"/trip",
+		TripFinder,
+	},
+	Route{
+		"TripShow",
+		"GET",
+		"/trip/{trip_id}",
+		TripShow,
+	},
+	Route{
+		"TripUpdate",
+		"PUT",
+		"/trip/{trip_id}/request",
+		TripUpdate,
+	},
+	
+	
 }
