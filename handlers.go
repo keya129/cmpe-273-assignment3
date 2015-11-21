@@ -247,12 +247,20 @@ l, err := strconv.Atoi(todoId)
   	fmt.Println("here")
   	  fmt.Println(GetTrip.Starting_from_location_id)
 
-	todoId2:=GetTrip.Starting_from_location_id
 	indx:=GetTrip.Count
-	todoId=GetTrip.Best_route_location_ids[indx]
+	var todoId2 string
+	var todoId1 string
+if(indx==len(GetTrip.Best_route_location_ids)){
+  	todoId2=GetTrip.Starting_from_location_id
+	todoId1=GetTrip.Best_route_location_ids[indx-1]
+  }else{
+  	todoId2=GetTrip.Best_route_location_ids[indx]
+  	todoId1=GetTrip.Starting_from_location_id
+
+  }
 	cc2:=getCoordinates(todoId2)
 	fmt.Println("here2")
-	cc1:=getCoordinates(todoId)
+	cc1:=getCoordinates(todoId1)
 
 	fmt.Println(cc1.Lat)
 	fmt.Println(cc2.Lat)
@@ -296,7 +304,7 @@ l, err := strconv.Atoi(todoId)
   }
   tempindx:=GetTrip.Count
   fmt.Println(dat.Eta)
-  if(indx!=len(GetTrip.Best_route_location_ids)-1){
+  if(indx!=len(GetTrip.Best_route_location_ids)){
   	indx++
   }else{
   	indx=0
@@ -308,14 +316,24 @@ l, err := strconv.Atoi(todoId)
   Example1(l,GetTrip)
   var FinalResp TripFinal
   FinalResp.Id=GetTrip.Id
-  if(tempindx==len(GetTrip.Best_route_location_ids)-1){
+  if(tempindx==len(GetTrip.Best_route_location_ids)){
   	FinalResp.Status="Finished"
   }else{
   	FinalResp.Status="Planning"
   }
   FinalResp.Id=GetTrip.Id
+  if(tempindx!=len(GetTrip.Best_route_location_ids)){
   FinalResp.Starting_from_location_id=GetTrip.Starting_from_location_id
+  }else{
+  FinalResp.Starting_from_location_id=GetTrip.Best_route_location_ids[tempindx-1]	
+  }
+    if(tempindx!=len(GetTrip.Best_route_location_ids)){
+
   FinalResp.Next_destination_location_id=GetTrip.Best_route_location_ids[tempindx]
+  }else{
+  FinalResp.Next_destination_location_id=GetTrip.Starting_from_location_id
+	
+  }
   FinalResp.Best_route_location_ids=GetTrip.Best_route_location_ids
   FinalResp.Total_uber_costs=GetTrip.Total_uber_costs
   FinalResp.Total_uber_duration=GetTrip.Total_uber_duration
