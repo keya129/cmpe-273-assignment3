@@ -313,7 +313,7 @@ queryString=queryString+"+"+symmore[k]
 }
 queryString=queryString+"+"+l.State
 url:="http://maps.google.com/maps/api/geocode/json?address="+queryString+"&sensor=false"
-fmt.Println(url)
+//fmt.Println(url)
 
   req, err := http.NewRequest("GET", url, nil)
   if err != nil {
@@ -353,7 +353,7 @@ return nCord
 }
 func getCoordinates(l string) Coordinate{
 url:="http://localhost:8081/location/"+l
-fmt.Println(url)
+//fmt.Println(url)
 var resCoord Location
   req, err := http.NewRequest("GET", url, nil)
   if err != nil {
@@ -423,25 +423,53 @@ finaldurationmatrix[0]=startmatrix[min].Duration
 
 //fmt.Println(finalindexmatrix[1])
 m:=0
-k:=0
+//k:=0
 //minPrice:=0
 //minDuration:=0.0
 
 //someflag:=0
 for counter:=0;m<len(c)+1;counter++{
-    //fmt.Println("min")
+    fmt.Println("min")
 
-  //fmt.Println(min)
+  fmt.Println(min)
       //fmt.Println(m)
     //fmt.Println(m)
 
 minDist=matrix[min][0].Distance
+var t int
+var flagxxx int
+countxxx:=0
 if(finalindexmatrix[m]==0){
-     minDist=matrix[min][1].Distance
+  for j:=0;j<len(c);j++{
+    //fmt.Println("bhai")
+flagxxx=0
+
+  //fmt.Print(finalindexmatrix[j])
+//finalindexmatrix[j]
+  for l:=0;l<m;l++{
+if(j==finalindexmatrix[l]){
+  
+
+  flagxxx=1
+  //break;
+  }
+}
+  if (flagxxx==0 && countxxx==0){
+    t=j
+    if(matrix[min][t].Distance!=0){
+    countxxx=1
+  }
+  }
+
+}
+//fmt.Println("t")
+//fmt.Println(t)
+
+     minDist=matrix[min][t].Distance
  
 }
-
-for k=0;k<len(c);k++{
+var temp int
+for k:=0;k<len(c);k++{
       //fmt.Println("minDist")
 
 
@@ -463,12 +491,12 @@ if(flag==0){
          // fmt.Println("flag0")
 
 if (matrix[min][k].Distance<=minDist) {
-        //fmt.Println("under if")
+        fmt.Println("under if")
 
-      //fmt.Println(matrix[min][k].Distance)
-
+      fmt.Println(matrix[min][k].Distance)
+fmt.Println(k)
 minDist=matrix[min][k].Distance
-min=k
+temp=k
 
 //minPrice=matrix[min][k].Price
 //minDuration=matrix[min][k].Duration
@@ -480,8 +508,10 @@ min=k
 }
 }
 m++
+min=temp
 //fmt.Println(minDist)
-//fmt.Println(m)
+fmt.Println("downmin")
+fmt.Println(min)
 finalindexmatrix[m]=min
 //finaldistmatrix[m]=minDist
 //finalpricematrix[m]=minPrice
@@ -495,11 +525,46 @@ var sumDist float64
 var sumPrice int
 var sumDuration float64
 for k:=0;k<m-1;k++{
-  fmt.Print(finalindexmatrix[k])
-  if(finalindexmatrix[k]==0){
-    min2=matrix[finalindexmatrix[k]][1].Distance
+  //fmt.Print(finalindexmatrix[k])
+
+  var t int
+var flagxxx int
+countxxx:=0
+if(finalindexmatrix[m]==0){
+  for j:=0;j<len(c);j++{
+    //fmt.Println("bhai")
+flagxxx=0
+
+  //fmt.Print(finalindexmatrix[j])
+//finalindexmatrix[j]
+  for l:=0;l<m;l++{
+if(j==finalindexmatrix[l]){
+  
+
+  flagxxx=1
+  //break;
+  }
+}
+  if (flagxxx==0 && countxxx==0){
+    t=j
+    if(matrix[min][t].Distance!=0){
+    countxxx=1
+  }
+  }
+
+}
+//fmt.Println("t")
+//fmt.Println(t)
+
+ min2=matrix[finalindexmatrix[k]][t].Distance
+        min3=matrix[finalindexmatrix[k]][t].Price
+                min4=matrix[finalindexmatrix[k]][t].Duration
+ 
 }else{
     min2=matrix[finalindexmatrix[k]][0].Distance
+    min3=matrix[finalindexmatrix[k]][0].Price
+                min4=matrix[finalindexmatrix[k]][0].Duration
+
 }
   for j:=0;j<len(c);j++{
     flag:=0
@@ -523,8 +588,8 @@ if(j==finalindexmatrix[jk]){
 
   if (min2>matrix[finalindexmatrix[k]][j].Distance && j!=finalindexmatrix[k] && flag==0){
   min2=matrix[finalindexmatrix[k]][j].Distance
-  //min3=matrix[finalindexmatrix[k]][j].Price
-  //min4=matrix[finalindexmatrix[k]][j].Duration
+  min3=matrix[finalindexmatrix[k]][j].Price
+  min4=matrix[finalindexmatrix[k]][j].Duration
 
   } 
   } 
